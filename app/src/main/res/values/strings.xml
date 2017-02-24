@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Расписание УКРТБ</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="schedule">Расписание</string>
+    <string name="bells">Звонки</string>
+    <string name="settings">Настройки</string>
+
+
+    <string name="today">на сегодня</string>
+    <string name="tomorrow">на завтра</string>
+    <string name="onDate">выбрать дату</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="url">https://ugkr-server.000webhostapp.com</string>
+    <string name="bellsText">Расписание звоноков с понедельника по пятницу</string>
+    <string name="bellsSaturdayText">Расписание звонков сокращенное (на субботу)</string>
+    <string-array name="bells">
+        <item><b>0:</b> 7.25–8.25</item>
+        <item><b>1:</b> 8.30–0.05</item>
+        <item><b>2:</b> 10.15–11.50</item>
+        <item><b>3:</b> 12.30–14.05</item>
+        <item><b>4:</b> 14.15–15.50</item>
+        <item><b>5:</b> 16.00–17.35</item>
+        <item><b>6:</b> 17.45–19.20</item>
+        <item><b>7:</b> 19.30–21.05</item>
+    </string-array>
+    <string-array name="bellsSaturday">
+        <item><b>0:</b> 8.00–9.00</item>
+
+        <item><b>1:</b> 9.10–10.10</item>
+
+        <item><b>2:</b> 10.20–11.20</item>
+
+        <item><b>3:</b> 11.30–12.30</item>
+
+        <item><b>4:</b> 12.40–13.40</item>
+
+        <item><b>5:</b> 13.50–14.50</item>
+
+        <item><b>6:</b> 15.00–16.00</item>
+        <item><b>7:</b> 16.10–17.10</item>
+    </string-array>
+</resources>

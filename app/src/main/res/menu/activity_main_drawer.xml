@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/schedule" android:icon="@drawable/ic_menu_schedule"
+            android:title="@string/schedule" />
+        <item android:id="@+id/bells" android:icon="@drawable/ic_menu_bells"
+            android:title="@string/bells" />
+        <item android:id="@+id/settings" android:icon="@drawable/ic_menu_settings"
+            android:title="@string/settings" />
+    </group>
+</menu>

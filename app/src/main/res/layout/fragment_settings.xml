@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="100"
+    android:background="#fff"
+    tools:context="ugkr.lessons.fragments.FragmentSettings">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:text="Расписание для:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/typeRadioGroup"
+            android:checkedButton="@+id/radioButtonForStudents">
+
+            <RadioButton
+                android:text="Учебных групп"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonForStudents"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="Преподавателей"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonForTeachers"
+                android:layout_weight="1" />
+        </RadioGroup>
+
+        <Button
+            android:text="Обновить списки групп"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/updateSettingsButton"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp" />
+
+    </LinearLayout>
+
+</FrameLayout>
