@@ -25,8 +25,10 @@ public  class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     public String code="";
+    public boolean isGroup;
+
     public interface OnDateSelectedListener {
-        public void OnDateSelected(int year, int month, int day,String code);
+        public void OnDateSelected(int year, int month, int day,String code, boolean isGroup);
     }
     OnDateSelectedListener dateListener;
 
@@ -44,7 +46,7 @@ public  class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        dateListener.OnDateSelected(year,month,day,code);
+        dateListener.OnDateSelected(year,month,day,code,isGroup);
     }
 
     @Override

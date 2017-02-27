@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import java.util.Calendar;
 import java.util.List;
 
+import com.ugkr.lessons.LinksLists.LinksAdapter;
 import com.ugkr.lessons.LinksLists.LinksList;
 import com.ugkr.lessons.LinksLists.NameCodePair;
 import com.ugkr.lessons.MainActivity;
@@ -40,14 +41,15 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
     public  Spinner linksSpinner;
     List<NameCodePair> linksList;
     String code;
+    boolean isGroup;
 
     SharedPreferences sPref;
 
 
     public interface ScheduleFragmentInterface {
-        public void OnDateSelected(Calendar calendar, String code);
-        public void OnDateSelected(Calendar calendar, String code, Boolean today);
-        public  void OnCalendarOpened(String code);
+        public void OnDateSelected(Calendar calendar, String code, boolean isGroup);
+        public void OnDateSelected(Calendar calendar, String code, boolean isGroup, boolean today);
+        public  void OnCalendarOpened(String code, boolean isGroup);
     }
 
 
@@ -94,18 +96,19 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
         linksSpinner = (Spinner) view.findViewById(R.id.linksSpinner);
 
         int act = sPref.getInt("act",1);
-        String type = act == 1 ? "Groups" : "Teachers";
+        Boolean onlyFav = sPref.getBoolean("onlyFav",false);
+        Boolean isGroup = act == 1;
 
         LinksList ll = new LinksList(getActivity());
-        linksList = ll.GetLinks(type);
-        if (linksList.isEmpty()){
+        linksList = ll.GetLinks(isGroup,onlyFav);
+        if (linksList.isEmpty() && !onlyFav){
             MainActivity activity = (MainActivity) getActivity();
             activity.onUpdateLinksClick();
-            linksList = ll.GetLinks(type);
+            linksList = ll.GetLinks(isGroup,onlyFav);
         }
 
-        ArrayAdapter<NameCodePair> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, linksList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //ArrayAdapter<NameCodePair> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, linksList);
+        LinksAdapter adapter = new LinksAdapter(getActivity(),linksList);
 
         linksSpinner.setAdapter(adapter);
         linksSpinner.setOnItemSelectedListener(this);
@@ -119,14 +122,14 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
         Calendar cal = Calendar.getInstance();
         switch (v.getId()){
             case R.id.today:
-                scheduleFragmentInterface.OnDateSelected(cal,code,true);
+                scheduleFragmentInterface.OnDateSelected(cal,code,isGroup,true);
                 break;
             case R.id.tomorrow:
                 cal.add(Calendar.DAY_OF_MONTH,1);
-                scheduleFragmentInterface.OnDateSelected(cal,code);
+                scheduleFragmentInterface.OnDateSelected(cal,code,isGroup);
                 break;
             case R.id.onDate:
-                scheduleFragmentInterface.OnCalendarOpened(code);
+                scheduleFragmentInterface.OnCalendarOpened(code,isGroup);
                 break;
         }
     }
@@ -134,7 +137,7 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         code = linksList.get(position).code;
-
+        isGroup = linksList.get(position).isGroup;
         SharedPreferences.Editor editor = sPref.edit();
         editor.putInt("selectedRowNum",position);
         editor.apply();

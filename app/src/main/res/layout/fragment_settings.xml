@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:alpha="100"
     android:background="#fff"
-    tools:context="ugkr.lessons.fragments.FragmentSettings">
+    tools:context="com.ugkr.lessons.fragments.FragmentSettings">
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,7 +23,9 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:id="@+id/typeRadioGroup"
-            android:checkedButton="@+id/radioButtonForStudents">
+            android:checkedButton="@+id/radioButtonForStudents"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <RadioButton
                 android:text="Учебных групп"
@@ -39,6 +41,12 @@
                 android:id="@+id/radioButtonForTeachers"
                 android:layout_weight="1" />
         </RadioGroup>
+
+        <Switch
+            android:text="Показывать только избранное"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:id="@+id/onlyFav" />
 
         <Button
             android:text="Обновить списки групп"

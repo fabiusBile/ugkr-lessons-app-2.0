@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import com.ugkr.lessons.R;
 
@@ -23,7 +25,7 @@ import static android.content.Context.MODE_PRIVATE;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class FragmentSettings extends Fragment   implements View.OnClickListener, RadioGroup.OnCheckedChangeListener{
+public class FragmentSettings extends Fragment   implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener{
 
     Button updateLinksButton;
     View view;
@@ -49,9 +51,13 @@ public class FragmentSettings extends Fragment   implements View.OnClickListener
 
         sPref = getActivity().getPreferences(MODE_PRIVATE);
         int act = sPref.getInt("act",1);
+        boolean onlyFav = sPref.getBoolean("onlyFav",false);
 
         RadioGroup rg = (RadioGroup) view.findViewById(R.id.typeRadioGroup);
         rg.setOnCheckedChangeListener(this);
+        Switch favSwitch = (Switch) view.findViewById(R.id.onlyFav);
+        favSwitch.setChecked(onlyFav);
+        favSwitch.setOnCheckedChangeListener(this);
 
         RadioButton rb;
         if (act==1){
@@ -112,7 +118,14 @@ public class FragmentSettings extends Fragment   implements View.OnClickListener
         SharedPreferences.Editor editor = sPref.edit();
         editor.putInt("act",act);
         editor.putInt("selectedRowNum",0);
-        editor.commit();
+        editor.apply();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        SharedPreferences.Editor editor = sPref.edit();
+        editor.putBoolean("onlyFav",isChecked);
+        editor.apply();
     }
 
 

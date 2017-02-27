@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         ftrans = getFragmentManager().beginTransaction();
 
-
         if (id == R.id.schedule) {
             ftrans.replace(R.id.content_main,fschedule);
         } else if (id == R.id.bells) {
@@ -110,13 +109,13 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void OpenScheduleActivity(int year, int month, int day, final String code, final Boolean today) {
+    private void OpenScheduleActivity(int year, int month, int day, final String code, boolean isGroup, final Boolean today) {
         // Instantiate the RequestQueue.
         final RequestQueue queue = Volley.newRequestQueue(this);
         final String date = String.format(Locale.getDefault(), "%d-%d-%d", year, month, day);
         String baseUrl = getString(R.string.url);
         final SharedPreferences sPref = this.getPreferences(MODE_PRIVATE);
-        String act = Integer.toString(sPref.getInt("act", 1));
+        String act = isGroup ? "1" : "4";
         String url = baseUrl + "?action=getSchedule&act=" + act + "&code=" + code + "&date=" + date;
 
         final Intent intent = new Intent(this, ScheduleActivity.class);
@@ -194,25 +193,27 @@ public class MainActivity extends AppCompatActivity
         }
     }
     @Override
-    public void OnDateSelected(Calendar calendar, String code, Boolean today) {
+    public void OnDateSelected(Calendar calendar, String code, boolean isGroup, boolean today) {
         int day = calendar.get(Calendar.DATE);
         int month =calendar.get(Calendar.MONTH)+1;
         int year = calendar.get(Calendar.YEAR);
-        OpenScheduleActivity(year,month,day, code,today);
+        OpenScheduleActivity(year,month,day, code, isGroup, today);
     }
     @Override
-    public void OnDateSelected(Calendar calendar, String code) {
-        OnDateSelected(calendar,code,false);
+    public void OnDateSelected(Calendar calendar, String code, boolean isGroup) {
+        OnDateSelected(calendar,code,isGroup,false);
     }
 
     @Override
-    public void OnDateSelected(int year, int month, int day, String code) {
-        OpenScheduleActivity(year,month+1,day, code,false);
+    public void OnDateSelected(int year, int month, int day, String code, boolean isGroup) {
+        OpenScheduleActivity(year,month+1,day, code, isGroup,false);
     }
     @Override
-    public void OnCalendarOpened(String code) {
+    public void OnCalendarOpened(String code,boolean isGroup) {
         DatePickerFragment calendarFragment = new DatePickerFragment();
         calendarFragment.code = code;
+        calendarFragment.isGroup = isGroup;
+
         calendarFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -297,12 +298,14 @@ public class MainActivity extends AppCompatActivity
         LinksList ll = new LinksList(this);
         try {
             String[] tables = {"groups","teachers"};
+            boolean isGroup=true;
             for (String table: tables) {
                 JSONArray array = json.getJSONArray(table);
                 for (int i=0;i!=array.length();i++){
                     JSONObject row = array.getJSONObject(i);
-                    ll.addNameCodePair(table,row.getString("name"),row.getString("code"));
+                    ll.addNameCodePair(row.getString("name"),row.getString("code"),isGroup);
                 }
+                isGroup = false;
             }
         } catch (JSONException e) {
             e.printStackTrace();
