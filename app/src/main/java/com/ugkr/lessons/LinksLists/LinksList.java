@@ -10,9 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fabiusbile on 12.02.17.
- */
 
 public class LinksList extends SQLiteOpenHelper {
 
@@ -43,7 +40,6 @@ public class LinksList extends SQLiteOpenHelper {
         values.put("Favourite", favourite);
         values.put("isGroup", isGroup);
         db.replace("Groups",null,values);
-        db.close();
     }
     public void addNameCodePair(String name, String code, boolean isGroup){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -52,14 +48,13 @@ public class LinksList extends SQLiteOpenHelper {
         values.put("Name",name);
         values.put("isGroup", isGroup);
         db.replace("Groups",null,values);
-        db.close();
     }
 
     public List<NameCodePair> GetLinks (Boolean isGroup, Boolean onlyFav){
         List<NameCodePair> links = new ArrayList<>();
         int isGroupInt = (isGroup) ? 1 : 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "";
+        String selectQuery;
         if (onlyFav){
             selectQuery = "SELECT * FROM Groups WHERE favourite = 1 ORDER BY favourite DESC;";
         } else {
@@ -67,7 +62,6 @@ public class LinksList extends SQLiteOpenHelper {
         }
 
         Cursor c = db.rawQuery(selectQuery,null);
-        try {
             if (c.moveToFirst()) {
                 do {
                     NameCodePair nameCodePair = new NameCodePair();
@@ -78,10 +72,8 @@ public class LinksList extends SQLiteOpenHelper {
                     links.add(nameCodePair);
                 } while (c.moveToNext());
             }
-        } finally{
             c.close();
-        }
-        db.close();
+
         return links;
     }
 }

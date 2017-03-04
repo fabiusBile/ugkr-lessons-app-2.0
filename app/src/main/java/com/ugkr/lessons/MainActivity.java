@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity
                                     intent.putParcelableArrayListExtra("schedule", lessons);
                                     intent.putExtra("date", date);
                                     if (today){
-                                        Log.d("today!","today!");
                                         SharedPreferences.Editor editor = sPref.edit();
                                         editor.putString("savedDate",date);
                                         editor.putString("savedRasp",response);
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private ArrayList<Lesson> JsonToLessonsArray(JSONArray json){
-        ArrayList<Lesson> array = new ArrayList<Lesson>();
+        ArrayList<Lesson> array = new ArrayList<>();
         for (int i=0;i!=json.length();i++){
             try {
                 String num = json.getJSONObject(i).getString("num");

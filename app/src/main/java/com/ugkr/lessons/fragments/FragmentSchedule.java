@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.function.Predicate;
 
 import com.ugkr.lessons.LinksLists.LinksAdapter;
 import com.ugkr.lessons.LinksLists.LinksList;
@@ -47,9 +48,9 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
 
 
     public interface ScheduleFragmentInterface {
-        public void OnDateSelected(Calendar calendar, String code, boolean isGroup);
-        public void OnDateSelected(Calendar calendar, String code, boolean isGroup, boolean today);
-        public  void OnCalendarOpened(String code, boolean isGroup);
+        void OnDateSelected(Calendar calendar, String code, boolean isGroup);
+        void OnDateSelected(Calendar calendar, String code, boolean isGroup, boolean today);
+        void OnCalendarOpened(String code, boolean isGroup);
     }
 
 
@@ -57,13 +58,6 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment FragmentSchedule.
-     */
-    // TODO: Rename and change types and number of parameters
 
 
     @Override
@@ -77,7 +71,16 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        int selectedRowNum = sPref.getInt("selectedRowNum",0);
+        int selectedRowNum=0;
+        String selectedCode = sPref.getString("selectedCode","");
+        if (selectedCode.length()>0){
+            for (int i=0;i!=linksList.size();i++){
+                if (linksList.get(i).code.equals(code)){
+                    selectedRowNum = i;
+                    break;
+                }
+            }
+        }
         linksSpinner.setSelection(selectedRowNum);
     }
 
@@ -139,7 +142,7 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
         code = linksList.get(position).code;
         isGroup = linksList.get(position).isGroup;
         SharedPreferences.Editor editor = sPref.edit();
-        editor.putInt("selectedRowNum",position);
+        editor.putString("selectedCode",code);
         editor.apply();
     }
 
