@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class FragmentSchedule extends Fragment implements View.OnClickListener, 
         String selectedCode = sPref.getString("selectedCode","");
         if (selectedCode.length()>0){
             for (int i=0;i!=linksList.size();i++){
-                if (linksList.get(i).code.equals(code)){
+                if (linksList.get(i).code.equals(selectedCode)){
                     selectedRowNum = i;
                     break;
                 }
