@@ -4,8 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="schedule">Расписание</string>
-    <string name="bells">Звонки</string>
+    <string name="schedule">Расписание занятий</string>
+    <string name="bells">Расписание звонков</string>
     <string name="settings">Настройки</string>
 
 
@@ -15,7 +15,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="url">https://ugkr-server.000webhostapp.com</string>
+    <string name="url">http://ugkr.ru/api.php</string>
     <string name="bellsText">Расписание звоноков с понедельника по пятницу</string>
     <string name="bellsSaturdayText">Расписание звонков сокращенное (на субботу)</string>
     <string-array name="bells">

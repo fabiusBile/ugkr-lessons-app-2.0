@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sPref = this.getPreferences(MODE_PRIVATE);
         String act = isGroup ? "1" : "4";
         String url = baseUrl + "?action=getSchedule&act=" + act + "&code=" + code + "&date=" + date;
-
+        Log.d("url",url);
         final Intent intent = new Intent(this, ScheduleActivity.class);
 
         String savedDate = sPref.getString("savedDate", "");
